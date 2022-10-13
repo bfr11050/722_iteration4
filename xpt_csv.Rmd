@@ -1,0 +1,35 @@
+---
+title: "sas to csv"
+author: "Ben Fry"
+date: '2022-08-17'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("haven")
+```
+
+```{r}
+data <- read_xpt("LLCP2020.XPT")
+write.csv(data,"LLCP2020.csv", row.names = FALSE)
+```
+
+
+```{r}
+cleaned_data <- read.csv("heart_2020_cleaned.csv")
+```
+
+```{r}
+colSums(is.na(cleaned_data))
+```
+
+
+```{r}
+write.csv(data,"LLCP2020.csv", row.names = FALSE)
+```
+
+```{r}
+raw_csv <- read.csv("LLCP2020.csv")
+```

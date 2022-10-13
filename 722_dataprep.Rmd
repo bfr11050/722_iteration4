@@ -1,0 +1,279 @@
+---
+title: "722_dataprep"
+author: "Ben Fry"
+date: '2022-08-18'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+data <- read.csv("surveydata_22col.csv")
+```
+
+```{r}
+col_names <- c("Sex","General_health","Physical_health_30bad", "Mental_health_30bad", "Medical_cost", "Sleep_hours", "Stroke", "Asthma", "Skin_cancer", "Other_cancer", "Education", "Diff_con", "Diff_walk", "Smoked100", "Good_health", "Physical_act", "Heart_disease", "Age_group", "BMI", "Income_group", "Smoking_status", "Heavy_drink")
+
+colnames(data) <- col_names
+```
+
+```{r}
+data[is_empty(data)] = NA
+data[data == "$null$"] = NA
+```
+
+Sex
+```{r}
+data$Sex[data$Sex == 1] <- "Male"
+data$Sex[data$Sex == 2] <- "Female"
+
+data$Sex <- as.factor(data$Sex)
+```
+
+General Health
+```{r}
+data$General_health[data$General_health == 1] <- "Excellent"
+data$General_health[data$General_health == 2] <- "Very good"
+data$General_health[data$General_health == 3] <- "Good"
+data$General_health[data$General_health == 4] <- "Fair"
+data$General_health[data$General_health == 5] <- "Poor"
+
+data$General_health[data$General_health == 7] <- NA
+data$General_health[data$General_health == 9] <- NA
+
+data$General_health <- as.factor(data$General_health)
+```
+
+
+Physical Health
+```{r}
+data$Physical_health_30bad <- as.numeric(data$Physical_health_30bad)
+
+data$Physical_health_30bad[data$Physical_health_30bad == 88] <- 0
+data$Physical_health_30bad[data$Physical_health_30bad == 77] <- NA
+data$Physical_health_30bad[data$Physical_health_30bad == 99] <- NA
+```
+
+Mental Health
+```{r}
+data$Mental_health_30bad <- as.numeric(data$Mental_health_30bad)
+
+data$Mental_health_30bad[data$Mental_health_30bad == 88] <- 0
+data$Mental_health_30bad[data$Mental_health_30bad == 77] <- NA
+data$Mental_health_30bad[data$Mental_health_30bad == 99] <- NA
+```
+
+Medical Cost
+```{r}
+data$Medical_cost[data$Medical_cost == 1] <- "Yes"
+data$Medical_cost[data$Medical_cost == 2] <- "No"
+
+data$Medical_cost[data$Medical_cost == 7] <- NA
+data$Medical_cost[data$Medical_cost == 9] <- NA
+
+data$Medical_cost <- as.factor(data$Medical_cost)
+```
+
+
+Sleep
+```{r}
+data$Sleep_hours <- as.numeric(data$Sleep_hours)
+
+data$Sleep_hours[data$Sleep_hours == 77] <- NA
+data$Sleep_hours[data$Sleep_hours == 99] <- NA
+```
+
+
+Stroke
+```{r}
+data$Stroke[data$Stroke == 1] <- "Yes"
+data$Stroke[data$Stroke == 2] <- "No"
+
+data$Stroke[data$Stroke == 7] <- NA
+data$Stroke[data$Stroke == 9] <- NA
+
+data$Stroke <- as.factor(data$Stroke)
+```
+
+Asthma
+```{r}
+data$Asthma[data$Asthma == 1] <- "Yes"
+data$Asthma[data$Asthma == 2] <- "No"
+
+data$Asthma[data$Asthma == 7] <- NA
+data$Asthma[data$Asthma == 9] <- NA
+
+data$Asthma <- as.factor(data$Asthma)
+```
+
+
+Skin_cancer
+```{r}
+data$Skin_cancer[data$Skin_cancer == 1] <- "Yes"
+data$Skin_cancer[data$Skin_cancer == 2] <- "No"
+
+data$Skin_cancer[data$Skin_cancer == 7] <- NA
+data$Skin_cancer[data$Skin_cancer == 9] <- NA
+
+data$Skin_cancer <- as.factor(data$Skin_cancer)
+```
+
+Other_cancer
+```{r}
+data$Other_cancer[data$Other_cancer == 1] <- "Yes"
+data$Other_cancer[data$Other_cancer == 2] <- "No"
+
+data$Other_cancer[data$Other_cancer == 7] <- NA
+data$Other_cancer[data$Other_cancer == 9] <- NA
+
+data$Other_cancer <- as.factor(data$Other_cancer)
+```
+
+Ēducation
+```{r}
+data$Education <- as.numeric(data$Education)
+
+data$Education[data$Education == 9] <- NA
+```
+
+
+Diff_con
+```{r}
+data$Diff_con[data$Diff_con == 1] <- "Yes"
+data$Diff_con[data$Diff_con == 2] <- "No"
+
+data$Diff_con[data$Diff_con == 7] <- NA
+data$Diff_con[data$Diff_con == 9] <- NA
+
+data$Diff_con <- as.factor(data$Diff_con)
+```
+
+Diff_walk
+```{r}
+data$Diff_walk[data$Diff_walk == 1] <- "Yes"
+data$Diff_walk[data$Diff_walk == 2] <- "No"
+
+data$Diff_walk[data$Diff_walk == 7] <- NA
+data$Diff_walk[data$Diff_walk == 9] <- NA
+
+data$Diff_walk <- as.factor(data$Diff_walk)
+```
+
+Smoked100
+```{r}
+data$Smoked100[data$Smoked100 == 1] <- "Yes"
+data$Smoked100[data$Smoked100 == 2] <- "No"
+
+data$Smoked100[data$Smoked100 == 7] <- NA
+data$Smoked100[data$Smoked100 == 9] <- NA
+
+data$Smoked100 <- as.factor(data$Smoked100)
+```
+
+Good_health
+```{r}
+data$Good_health[data$Good_health == 1] <- "Yes"
+data$Good_health[data$Good_health == 2] <- "No"
+
+data$Good_health[data$Good_health == 9] <- NA
+
+data$Good_health <- as.factor(data$Good_health)
+```
+
+Physical_act
+```{r}
+data$Physical_act[data$Physical_act == 1] <- "Yes"
+data$Physical_act[data$Physical_act == 2] <- "No"
+
+data$Physical_act[data$Physical_act == 9] <- NA
+
+data$Physical_act <- as.factor(data$Physical_act)
+```
+
+
+Heart_disease
+```{r}
+data$Heart_disease[data$Heart_disease == 1] <- "Yes"
+data$Heart_disease[data$Heart_disease == 2] <- "No"
+
+
+data$Heart_disease <- as.factor(data$Heart_disease)
+```
+
+Age
+```{r}
+data$Age_group[data$Age_group == 1] <- "18-24"
+data$Age_group[data$Age_group == 2] <- "25-29"
+data$Age_group[data$Age_group == 3] <- "30-34"
+data$Age_group[data$Age_group == 4] <- "35-39"
+data$Age_group[data$Age_group == 5] <- "40-44"
+data$Age_group[data$Age_group == 6] <- "45-49"
+data$Age_group[data$Age_group == 7] <- "50-54"
+data$Age_group[data$Age_group == 8] <- "55-59"
+data$Age_group[data$Age_group == 9] <- "60-64"
+data$Age_group[data$Age_group == 10] <- "65-69"
+data$Age_group[data$Age_group == 11] <- "70-74"
+data$Age_group[data$Age_group == 12] <- "75-79"
+data$Age_group[data$Age_group == 13] <- "80+"
+data$Age_group[data$Age_group == 14] <- NA
+
+data$Age_group <- as.factor(data$Age_group)
+```
+
+
+BMI
+
+```{r}
+data$BMI <- data$BMI/100
+```
+
+
+Income_group
+```{r}
+data$Income_group[data$Income_group == 1] <- "<$14,999"
+data$Income_group[data$Income_group == 2] <- "$15,000 - $24,999"
+data$Income_group[data$Income_group == 3] <- "$25,000 - $34,999"
+data$Income_group[data$Income_group == 4] <- "$35,000 - $49,999"
+data$Income_group[data$Income_group == 5] <- "$50,000<"
+
+data$Income_group[data$Income_group == 9] <- NA
+
+data$Income_group <- as.factor(data$Income_group)
+```
+
+Smoking_status
+```{r}
+data$Smoking_status[data$Smoking_status == 1] <- "Current Daily"
+data$Smoking_status[data$Smoking_status == 2] <- "Current Occasional"
+data$Smoking_status[data$Smoking_status == 3] <- "Former"
+data$Smoking_status[data$Smoking_status == 4] <- "Never"
+
+data$Smoking_status[data$Smoking_status == 9] <- NA
+
+data$Smoking_status <- as.factor(data$Smoking_status)
+```
+
+Heavy_drink
+```{r}
+data$Heavy_drink[data$Heavy_drink == 1] <- "No"
+data$Heavy_drink[data$Heavy_drink == 2] <- "Yes"
+
+data$Heavy_drink[data$Heavy_drink == 9] <- NA
+
+data$Heavy_drink <- as.factor(data$Heavy_drink)
+```
+
+
+```{r}
+data_out <- na.omit(data)
+```
+
+Write CSV
+```{r}
+write.csv(data_out, "HeartData2020.csv", row.names = FALSE)
+```
